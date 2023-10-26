@@ -1,0 +1,47 @@
+.label-before {
+  position: absolute !important;
+  pointer-events: none;
+  transition: all 0.2s ease 0s;
+  color: rgb(181, 181, 181);
+  top: 13px !important;
+  left: 14px !important;
+  font-size: 18px;
+  background: rgb(255, 255, 255);
+  padding: 0px !important;
+  max-width: 90%;
+  max-height: 2.2rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.label-after {
+  position: absolute;
+  pointer-events: none;
+  transition: all 0.2s ease 0s;
+  color: rgb(236, 70, 84);
+  top: -9px;
+  left: 10px;
+  font-size: 13px;
+  background: rgb(255, 255, 255);
+  padding: 0px 5px;
+  max-width: 90%;
+  max-height: 2.2rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+/* 
+.form-control {
+  min-height: 3.5rem;
+  padding: 1rem 0.75rem;
+} */
+
+.form-input-field {
+  border: 0.15 solid rgb(105, 105, 105);
+  height: 3rem;
+}
+
+.form-input-field :focus {
+  border-color: rgb(105, 105, 105) !important;
+}

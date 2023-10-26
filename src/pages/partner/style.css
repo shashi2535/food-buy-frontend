@@ -1,0 +1,22 @@
+.partner-container {
+  background-image: url("https://b.zmtcdn.com/mx-onboarding-hero87f77501659a5656cad54d98e72bf0d81627911821.webp");
+  height: 420px;
+  background-size: cover; /* This ensures the image covers the entire div */
+  background-position: center;
+}
+
+.overlay {
+  background-color: rgba(0, 0, 0, 0.35);
+  height: inherit;
+  color: white;
+}
+
+.restaurant-exits input:focus {
+  outline: none;
+}
+
+.heading {
+  font-size: 35px;
+  font-weight: 500;
+}
+

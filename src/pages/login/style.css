@@ -1,0 +1,14 @@
+.divider {
+  /* font-size: 30px; */
+  display: flex;
+  align-items: center;
+}
+
+.divider::before,
+.divider::after {
+  flex: 1;
+  content: "";
+  padding: 1px;
+  background-color: rgb(244, 244, 244);
+  margin: 4px;
+}

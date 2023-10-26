@@ -1,3 +1,3 @@
 export * from "./login"
 export * from "./signup"
-export * from "./todo"
+export * from './partner';

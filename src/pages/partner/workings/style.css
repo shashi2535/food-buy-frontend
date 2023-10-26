@@ -1,0 +1,58 @@
+
+.first_div {
+    background-image: url("https://b.zmtcdn.com/merchant-onboarding/f57794be6408563354c463c702ab45b91600672364.png");
+    background-size: cover; /* This ensures the image covers the entire div */
+    background-position: bottom;
+  }
+  
+  .how-it-work {
+    position: relative;
+  }
+  
+  .work-steps {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .work-steps-container {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: rgb(255, 255, 255);
+    margin-top: 2.4rem;
+    margin-right: 1.8rem;
+    width: 15.5rem;
+    height: 20rem;
+  }
+  
+  .work-steps-img-div {
+    align-items: center;
+    height: 147px;
+    width: 147px;
+    border-radius: 50%;
+    background-color: rgb(255, 252, 241);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .work-steps-img-div img {
+    height: 3.3rem;
+  }
+  
+  .steps-main-heading {
+    font-size: 14px;
+    color: rgb(79, 79, 79);
+    font-weight: 500;
+  }
+  
+  .steps-sub-heading {
+    font-size: 12px;
+    line-height: 24px;
+  }
+  

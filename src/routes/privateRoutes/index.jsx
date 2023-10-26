@@ -3,12 +3,12 @@ import {useNavigate} from "react-router-dom"
 import { isAuthenticated } from "../../utils"
 
 const PrivateRoutes = ({Component})=>{
-const nevigate = useNavigate()
+const navigate = useNavigate()
     useEffect(()=>{
       if(!isAuthenticated()){
-        nevigate("/")
+        navigate("/")
       }  
-    },[])
+    },[navigate])
     return ( 
         <Component/>
     )

@@ -1,0 +1,37 @@
+
+.partner-navbar {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.05));
+    margin: 0px 10rem;
+  }
+  
+  .logo-heading {
+    font-size: 33px;
+    line-height: 0.4;
+    font-family: "Alumni Sans Collegiate One", sans-serif;
+    display: block;
+  }
+  
+  .logo-sub-heading {
+    font-weight: 900 !important;
+    font-size: 13px;
+    line-height: 0;
+    font-style: italic;
+    line-height: 0;
+    font-family: "Inter", sans-serif;
+  }
+  
+  .nav-list {
+    font-family: "Inter", sans-serif;
+    padding: 10px 0px;
+    display: flex;
+    align-items: center;
+  }
+  
+  .nav-list * {
+    margin: 0px 10px;
+  }
+  
+  .nav-list button {
+    font-size: 14px;
+    padding: 3px 10px;
+  }

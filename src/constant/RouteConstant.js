@@ -1,4 +1,4 @@
 export const Url = {
-  Signup :"/signup"  ,
-  GetTodo:"/GetTodo"
+  Signup: "/signup",
+  PARTNERS_LANDING_PAGE: "/partner_with_us"
 }
