@@ -1,13 +1,16 @@
 import { useFormik } from "formik";
-import React, {useState} from "react";
+import React, { useContext, useState } from "react";
 import { Modal } from "react-bootstrap";
 import { BiSquareRounded, BiCheckboxChecked } from "react-icons/bi";
-import { InputLabel } from "../../component";
+import { FcGoogle } from "react-icons/fc";
+import { InputLabel, FormButton } from "../../component";
 import { APP_NAME, MODAL } from "../../constant";
+import { ModalContext } from "../../utils";
 import { signUpSchema } from "../../validation/user";
 import "./style.css";
 
 export const SignUpBody = () => {
+  const { setCurrentModal } = useContext(ModalContext);
   const [termsAccepted, setTermsAccepted] = useState(false);
   const {
     handleSubmit,
@@ -47,7 +50,6 @@ export const SignUpBody = () => {
   function handleSubmission(values) {
     console.log(values);
   }
-  console.log();
   return (
     <>
       <Modal.Body className="p-4 pt-0">
@@ -91,6 +93,10 @@ export const SignUpBody = () => {
             >
               Create Account
             </button>
+            <div className="divider text-secondary">or</div>
+            <FormButton text="Continue with Google">
+              <FcGoogle className="fs-3 me-3 ms-5" />
+            </FormButton>
           </div>
         </form>
       </Modal.Body>
@@ -101,6 +107,7 @@ export const SignUpBody = () => {
         <span
           className="fw-light text-pink"
           role="button"
+          onClick={() => setCurrentModal(MODAL.LOGIN_PHONE)}
         >
           Login
         </span>

@@ -1,11 +1,13 @@
 import * as Yup from "yup";
 import { Modal } from "react-bootstrap";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { EMAIL_ICON, MODAL } from "../../constant";
+import { ModalContext } from "../../utils";
 
 export const EmailLogin = () => {
   const [email, setEmail] = useState("");
   const [validationError, setValidationError] = useState("");
+  const { currentModal, setCurrentModal } = useContext(ModalContext);
 
   function handleLoginWithEmail() {
     const validatePhone = Yup.string("Please enter an email")
@@ -62,6 +64,7 @@ export const EmailLogin = () => {
         <span
           className="fw-light text-pink"
           role="button"
+          onClick={() => setCurrentModal(MODAL.LOGIN_PHONE)}
         >
           Login
         </span>

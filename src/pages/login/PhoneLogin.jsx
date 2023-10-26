@@ -1,12 +1,15 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Modal } from "react-bootstrap";
 import { MdEmail } from "react-icons/md";
 import { FcGoogle } from "react-icons/fc";
-import { APP_NAME, FLAGS } from "../../constant";
+import { APP_NAME, FLAGS, MODAL } from "../../constant";
 import * as Yup from "yup";
 import { FormButton } from "../../component/button/formButton";
+import { ModalContext } from "../../utils";
 
 export const PhoneLogin = () => {
+  const { setCurrentModal } = useContext(ModalContext);
+
   const [phone, setPhone] = useState("");
   const [validationError, setValidationError] = useState("");
   function handlePhoneInput(e) {
@@ -31,7 +34,6 @@ export const PhoneLogin = () => {
           "🚀 ~ file: PhoneLogin.jsx:26 ~ handleLoginWithPhone ~ error:",
           error
         );
-        // if(!min)
         setValidationError(error?.message);
       });
   }
@@ -76,7 +78,10 @@ export const PhoneLogin = () => {
             onClick={handleLoginWithPhone}
           />
           <div className="divider text-secondary">or</div>
-          <FormButton text="Continue with Email">
+          <FormButton
+            text="Continue with Email"
+            onClick={() => setCurrentModal(MODAL.LOGIN_EMAIL)}
+          >
             <MdEmail className="fs-3 me-3 ms-5 text-pink" />
           </FormButton>
 
@@ -87,7 +92,11 @@ export const PhoneLogin = () => {
       </Modal.Body>
       <Modal.Footer className="align-self-start mb-2 mt-2">
         <span className="ms-3 text-body fw-light">New to {APP_NAME}?</span>
-        <span role="button" className="fw-light text-pink">
+        <span
+          role="button"
+          className="fw-light text-pink"
+          onClick={() => setCurrentModal(MODAL.SIGN_UP)}
+        >
           Create account
         </span>
       </Modal.Footer>

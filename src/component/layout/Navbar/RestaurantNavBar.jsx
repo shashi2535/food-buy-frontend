@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import { Nav, Navbar } from "react-bootstrap";
 import { APP_NAME } from "../../../constant";
-import { Login } from "../../login";
-import { SignUp } from "../../signup";
+import { Login, SignUp } from "../../../pages";
+import { ModalContext } from "../../../utils";
 import "./style.css";
 
 export const RestaurantNavBar = () => {
-
+  const [currentModal, setCurrentModal] = useState("");
   return (
-    <>
+    <ModalContext.Provider value={{ currentModal, setCurrentModal }}>
       <Navbar expand="lg" className="partner-navbar navbar-dark">
         <Navbar.Brand href="#home">
           <div>
@@ -25,6 +25,6 @@ export const RestaurantNavBar = () => {
           </Nav>
         </Navbar.Collapse>
       </Navbar>
-    </>
+    </ModalContext.Provider>
   );
 };
