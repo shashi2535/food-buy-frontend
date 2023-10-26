@@ -8,13 +8,15 @@ import { FormButton } from "../../component/button/formButton";
 import { ModalContext } from "../../utils";
 
 export const PhoneLogin = () => {
-  const { setCurrentModal } = useContext(ModalContext);
+  const { setCurrentModal, userData, setUserData } = useContext(ModalContext);
 
   const [phone, setPhone] = useState("");
   const [validationError, setValidationError] = useState("");
+
   function handlePhoneInput(e) {
     let updatedPhone = e.target.value?.slice(0, 10);
     setPhone(updatedPhone);
+    setUserData({ ...userData, phone: updatedPhone });
     setValidationError("");
   }
 
@@ -30,12 +32,9 @@ export const PhoneLogin = () => {
         setValidationError("");
       })
       .catch((error) => {
-        console.log(
-          "🚀 ~ file: PhoneLogin.jsx:26 ~ handleLoginWithPhone ~ error:",
-          error
-        );
         setValidationError(error?.message);
       });
+    setCurrentModal(MODAL.OTP_EMAIL);
   }
 
   return (

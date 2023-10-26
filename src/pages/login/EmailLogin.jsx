@@ -7,7 +7,7 @@ import { ModalContext } from "../../utils";
 export const EmailLogin = () => {
   const [email, setEmail] = useState("");
   const [validationError, setValidationError] = useState("");
-  const { currentModal, setCurrentModal } = useContext(ModalContext);
+  const { userData, setUserData, setCurrentModal } = useContext(ModalContext);
 
   function handleLoginWithEmail() {
     const validatePhone = Yup.string("Please enter an email")
@@ -16,8 +16,9 @@ export const EmailLogin = () => {
     validatePhone
       .validate(email)
       .then((result) => {
-        console.log("🚀 ~ result:", result);
+        setUserData({ ...userData, email });
         setValidationError("");
+        setCurrentModal(MODAL.OTP_EMAIL);
       })
       .catch((error) => {
         setValidationError(error.message);

@@ -40,6 +40,13 @@ code {
 .text-gray {
   color: rgb(105, 105, 105) !important;
 }
+.text-light-gray {
+  color: rgb(181, 181, 181);
+}
+
+.text-blue {
+  color: rgb(0, 153, 153);
+}
 
 .bg-pink {
   background-color: #ef4f5f !important;
@@ -47,4 +54,13 @@ code {
 
 .bg-gray {
   background-color: rgb(105, 105, 105) !important;
+}
+
+.border-blue:hover {
+  border: 2px solid rgb(0, 153, 153) !important;
+}
+
+.border-blue:focus {
+  border-color: rgb(0, 153, 153) !important;
+  outline-color: rgb(0, 153, 153) !important;
 }
