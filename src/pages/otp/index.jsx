@@ -1,3 +1,4 @@
+// import { HStack, PinInput, PinInputField } from "@chakra-ui/react";
 import React, { useContext, useState } from "react";
 import { Modal } from "react-bootstrap";
 import {
@@ -5,6 +6,7 @@ import {
   OTP_LENGTH,
   OTP_RESEND_TIMEOUT,
 } from "../../constant";
+// import { authService } from "../../servcies/auth.service";
 import { ModalContext } from "../../utils";
 import "./style.css";
 
@@ -39,13 +41,13 @@ export const OtpModal = () => {
       document.getElementById(`otp-${index - 1}`)?.focus();
     }
     if (updatedData?.values?.filter((i) => i).length === OTP_LENGTH) {
-      console.log("Completed");
+      console.log("completed");
     }
   }
 
   return (
     <Modal.Body className="p-4 pt-0">
-      <div className="">
+      <div>
         <div className="text-center text-secondary mt-4 fw-light">
           {getVerificationContent({ email: userData?.email })}
         </div>
@@ -68,6 +70,16 @@ export const OtpModal = () => {
             </div>
           ))}
         </div>
+        {/* <HStack>
+          <PinInput size="sm" className="row">
+            <PinInputField className="col-2" />
+            <PinInputField className="col-2" />
+            <PinInputField className="col-2" />
+            <PinInputField className="col-2" />
+            <PinInputField className="col-2" />
+            <PinInputField />
+          </PinInput>
+        </HStack> */}
         {resent && (
           <div className="position-relative d-flex justify-content-center align-content-center">
             <span

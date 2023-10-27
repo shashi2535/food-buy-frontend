@@ -37,7 +37,7 @@ export const EmailLogin = () => {
           </div>
           <input
             placeholder="Email"
-            className={`form-control ${validationError && "border-danger"}`}
+            className={`form-control border-blue ${validationError && "border-danger"}`}
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />

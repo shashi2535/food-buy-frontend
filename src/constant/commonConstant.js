@@ -25,7 +25,7 @@ export const LABEL_CLASSES = {
 
 export const getVerificationContent = (data, contentFor = MODAL.OTP_EMAIL) => {
     if (contentFor === MODAL.OTP_EMAIL) {
-        const [fullEmail, domain] = data?.email?.split('@') ?? [];
+        const [fullEmail, domain] = data?.email?.split('@') ?? [''];
         const email = fullEmail[0] + '*****' + fullEmail[fullEmail.length - 1] + domain;
         return `Verification code has been sent to your email, ${email}, please enter the same here to complete the signup. Valid for 10 minutes.`
     }
@@ -34,3 +34,5 @@ export const getVerificationContent = (data, contentFor = MODAL.OTP_EMAIL) => {
 export const OTP_RESEND_TIMEOUT = 30;
 
 export const OTP_LENGTH = 6;
+
+export const DEFAULT_PROFILE_PIC = 'https://www.pngarts.com/files/10/Default-Profile-Picture-PNG-Free-Download.png'

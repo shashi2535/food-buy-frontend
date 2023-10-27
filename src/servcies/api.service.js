@@ -45,7 +45,7 @@ agent.interceptors.response.use(
                 break;
             case 401:
                 authService.logout();
-                window.location.href = PAGE_URLS.LOGIN;
+                window.location.href = PAGE_URLS.PARTNERS_LANDING_PAGE;
                 break;
             case 403:
                 console.error('You are not allowed to do that!');

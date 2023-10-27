@@ -1,4 +1,4 @@
-import { API_ROUTES, STORAGE_KEYS } from '../Constants';
+import { API_ROUTES, STORAGE_KEYS } from '../constant';
 import { apiService } from './api.service';
 import { storageService } from './storage.service';
 
@@ -38,5 +38,6 @@ export const authService = {
   getUserDetails,
   logout,
   login,
-  loginAdmin
+  loginAdmin,
+  setUserDetails
 };

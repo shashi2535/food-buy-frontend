@@ -58,11 +58,19 @@ export const SignUp = () => {
         <form onSubmit={handleSubmit}>
           <div className="d-grid gap-3 mt-4">
             <div className="position-relative">
-              <InputLabel label={"Full Name"} {...getFieldProps("name")} />
+              <InputLabel
+                label={"Full Name"}
+                {...getFieldProps("name")}
+                className="border-blue"
+              />
               {getFormikError("name")}
             </div>
             <div className="position-relative">
-              <InputLabel label={"Email"} {...getFieldProps("email")} />
+              <InputLabel
+                label={"Email"}
+                {...getFieldProps("email")}
+                className="border-blue"
+              />
               {getFormikError("email")}
             </div>
             <div>

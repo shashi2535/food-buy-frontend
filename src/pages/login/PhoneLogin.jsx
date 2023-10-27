@@ -21,6 +21,7 @@ export const PhoneLogin = () => {
   }
 
   function handleLoginWithPhone() {
+    setCurrentModal(MODAL.OTP_EMAIL);
     const validatePhone = Yup.string().matches(
       /^[789]\d{9}$/,
       "Enter a valid phone number"
@@ -28,13 +29,11 @@ export const PhoneLogin = () => {
     validatePhone
       .validate(phone)
       .then((result) => {
-        console.log("🚀 ~ result:", result);
         setValidationError("");
       })
       .catch((error) => {
         setValidationError(error?.message);
       });
-    setCurrentModal(MODAL.OTP_EMAIL);
   }
 
   return (
