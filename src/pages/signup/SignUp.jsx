@@ -5,13 +5,13 @@ import { BiSquareRounded, BiCheckboxChecked } from "react-icons/bi";
 import { FcGoogle } from "react-icons/fc";
 import { InputLabel, FormButton } from "../../component";
 import { APP_NAME, MODAL } from "../../constant";
+import { userApi, authService } from "../../servcies";
 import { ModalContext } from "../../utils";
 import { signUpSchema } from "../../validation/user";
 import "./style.css";
 
 export const SignUp = () => {
   const { setCurrentModal } = useContext(ModalContext);
-  const { userData, setUserData } = useContext(ModalContext);
   const [termsAccepted, setTermsAccepted] = useState(false);
 
   const {
@@ -50,7 +50,17 @@ export const SignUp = () => {
     );
   }
   function handleSubmission(values) {
-    setUserData({ ...userData, ...values });
+    userApi
+      .signup(values)
+      .then((res) => {
+        if (res.status) {
+          setCurrentModal(MODAL.OTP_EMAIL);
+          authService.setUserDetails({ email: values?.email });
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
   return (
     <>

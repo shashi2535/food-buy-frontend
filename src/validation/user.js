@@ -13,5 +13,5 @@ export const loginSchema = Yup.object({
 export const signUpSchema = Yup.object().shape({
   name: Yup.string(getRequired('name')).required(getRequired('name')).min(2, getRequired('name')),
   email: Yup.string(getRequired('email')).email(getRequired('email')).required('Please enter a valid email'),
-  isTermAccepted: Yup.boolean().required()
+  isTermAccepted: Yup.boolean().oneOf([true]).required()
 });

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useEffect } from "react";
 import { Nav, Navbar } from "react-bootstrap";
 import { APP_NAME, DEFAULT_PROFILE_PIC, MODAL } from "../../../constant";
 import { AuthenticationModals } from "../../../pages";
@@ -9,12 +10,17 @@ import "./style.css";
 
 export const RestaurantNavBar = () => {
   const [currentModal, setCurrentModal] = useState("");
-  const [userData, setUserData] = useState({});
-  const userDetails = authService.getUserDetails();
-
+  const [show, setShow] = useState(false);
+  const [token, setToken] = useState(authService.getAuthToken());
+  const userData = authService.getUserDetails();
+  useEffect(() => {}, [setToken]);
+  const handleLogout = () => {
+    authService.logout();
+    setToken(null)
+  };
   return (
     <ModalContext.Provider
-      value={{ currentModal, setCurrentModal, userData, setUserData }}
+      value={{ currentModal, setCurrentModal, show, setShow }}
     >
       <Navbar expand="lg" className="partner-navbar navbar-dark">
         <Navbar.Brand href="#home">
@@ -27,15 +33,15 @@ export const RestaurantNavBar = () => {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ms-auto nav-list">
             <span>Advertise</span>
-            {!userDetails?.token ? (
+            {!token ? (
               <>
                 <AuthenticationModals modal={MODAL.LOGIN_PHONE} />
                 <AuthenticationModals modal={MODAL.SIGN_UP} />
               </>
             ) : (
-              <div class="dropdown">
+              <div className="dropdown">
                 <div
-                  class="dropdown-toggle d-flex align-items-center"
+                  className="dropdown-toggle d-flex align-items-center"
                   type="button"
                   data-bs-toggle="dropdown"
                   aria-expanded="false"
@@ -49,7 +55,7 @@ export const RestaurantNavBar = () => {
                   <span>Restaurant</span>
                 </div>
                 <div
-                  class="dropdown-menu"
+                  className="dropdown-menu"
                   style={{ width: "16rem", top: "3rem" }}
                 >
                   <div className="d-flex flex-column">
@@ -81,7 +87,7 @@ export const RestaurantNavBar = () => {
                         className="text-gray mb-2"
                         style={{ fontSize: "0.8rem", fontWeight: 300 }}
                       >
-                        {userDetails?.email ?? "dummy.email.com"}
+                        {userData?.email ?? "dummy.email.com"}
                       </p>
                     </div>
                     <hr className="text-light-gray" />
@@ -95,7 +101,7 @@ export const RestaurantNavBar = () => {
                     <FormButton
                       text={"Logout"}
                       className="border bg-pink m-2 text-light rounded ms-4 me-4"
-                      onClick={authService.logout}
+                      onClick={handleLogout}
                     />
                     <hr className="text-light-gray" />
                   </div>

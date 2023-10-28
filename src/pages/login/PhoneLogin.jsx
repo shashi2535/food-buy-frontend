@@ -6,17 +6,16 @@ import { APP_NAME, FLAGS, MODAL } from "../../constant";
 import * as Yup from "yup";
 import { FormButton } from "../../component/button/formButton";
 import { ModalContext } from "../../utils";
+import { authService, userApi } from "../../servcies";
 
 export const PhoneLogin = () => {
-  const { setCurrentModal, userData, setUserData } = useContext(ModalContext);
+  const { setCurrentModal } = useContext(ModalContext);
 
   const [phone, setPhone] = useState("");
   const [validationError, setValidationError] = useState("");
-
   function handlePhoneInput(e) {
     let updatedPhone = e.target.value?.slice(0, 10);
     setPhone(updatedPhone);
-    setUserData({ ...userData, phone: updatedPhone });
     setValidationError("");
   }
 
@@ -29,6 +28,21 @@ export const PhoneLogin = () => {
     validatePhone
       .validate(phone)
       .then((result) => {
+        userApi
+          .login({
+            phone,
+          })
+          .then((res) => {
+            if (res.status) {
+              setValidationError("");
+              console.log(phone, res);
+              authService.setUserDetails({ phone });
+              // setCurrentModal(MODAL.OTP_EMAIL);
+            }
+          })
+          .catch((err) => {
+            console.log(err);
+          });
         setValidationError("");
       })
       .catch((error) => {

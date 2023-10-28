@@ -3,11 +3,12 @@ import { Modal } from "react-bootstrap";
 import React, { useContext, useState } from "react";
 import { EMAIL_ICON, MODAL } from "../../constant";
 import { ModalContext } from "../../utils";
+import { authService, userApi } from "../../servcies";
 
 export const EmailLogin = () => {
   const [email, setEmail] = useState("");
   const [validationError, setValidationError] = useState("");
-  const { userData, setUserData, setCurrentModal } = useContext(ModalContext);
+  const { setCurrentModal } = useContext(ModalContext);
 
   function handleLoginWithEmail() {
     const validatePhone = Yup.string("Please enter an email")
@@ -16,9 +17,20 @@ export const EmailLogin = () => {
     validatePhone
       .validate(email)
       .then((result) => {
-        setUserData({ ...userData, email });
-        setValidationError("");
-        setCurrentModal(MODAL.OTP_EMAIL);
+        userApi
+          .login({
+            email,
+          })
+          .then((res) => {
+            if (res.status) {
+              setValidationError("");
+              authService.setUserDetails({ email });
+              setCurrentModal(MODAL.OTP_EMAIL);
+            }
+          })
+          .catch((err) => {
+            console.log(err);
+          });
       })
       .catch((error) => {
         setValidationError(error.message);
@@ -37,7 +49,9 @@ export const EmailLogin = () => {
           </div>
           <input
             placeholder="Email"
-            className={`form-control border-blue ${validationError && "border-danger"}`}
+            className={`form-control border-blue ${
+              validationError && "border-danger"
+            }`}
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />

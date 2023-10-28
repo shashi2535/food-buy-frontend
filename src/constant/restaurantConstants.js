@@ -57,7 +57,7 @@ export const OUR_PRODUCTS = [
     {
         image: 'https://www.zomato.com/partner-with-us/static/media/ZomatoEvent.c3e1f3a8.svg',
         heading: 'Events',
-        subHeading: "Partner with us for India\’s grandest food & entertainment carnival - “Zomaland”..."
+        subHeading: "Partner with us for India's grandest food & entertainment carnival - Zomaland”..."
     },
     {
         image: '	https://www.zomato.com/partner-with-us/static/media/Hyperpure.25f37214.svg',

@@ -2,11 +2,14 @@
 import React, { useContext, useState } from "react";
 import { Modal } from "react-bootstrap";
 import {
+  API_ROUTES,
   getVerificationContent,
   OTP_LENGTH,
   OTP_RESEND_TIMEOUT,
+  // PAGE_URLS,
 } from "../../constant";
-// import { authService } from "../../servcies/auth.service";
+import { agent, authService } from "../../servcies";
+// import { useNavigate } from "react-router-dom";
 import { ModalContext } from "../../utils";
 import "./style.css";
 
@@ -14,7 +17,9 @@ export const OtpModal = () => {
   const [counter, setCounter] = React.useState(OTP_RESEND_TIMEOUT);
   const [resent, setResent] = useState(false);
   const [otp, setOtp] = useState({ currentIndex: -1, values: [] });
-  const { userData } = useContext(ModalContext);
+  // const navigate = useNavigate();
+  const { setShow } = useContext(ModalContext);
+  const userData = authService.getUserDetails();
 
   React.useEffect(() => {
     counter > 0
@@ -23,6 +28,16 @@ export const OtpModal = () => {
   }, [counter]);
 
   function handleResend() {
+    agent
+      .post(API_ROUTES.RESEND_OTP, {
+        email: userData?.email,
+      })
+      .then(({ data }) => {
+        console.log("🚀 ~ file: index.jsx:54 ~ .then ~ res:", data);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
     setCounter(OTP_RESEND_TIMEOUT);
     setResent(true);
   }
@@ -41,7 +56,19 @@ export const OtpModal = () => {
       document.getElementById(`otp-${index - 1}`)?.focus();
     }
     if (updatedData?.values?.filter((i) => i).length === OTP_LENGTH) {
-      console.log("completed");
+      agent
+        .post(API_ROUTES.VALIDATE_OTP, {
+          email: userData?.email,
+          phone: userData?.phone,
+          otp: updatedData?.values.join(""),
+        })
+        .then(({ data }) => {
+          authService.setAuthToken(data?.result?.token);
+          setShow(false);
+        })
+        .catch((err) => {
+          console.error(err);
+        });
     }
   }
 

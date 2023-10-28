@@ -4,5 +4,8 @@ export const PAGE_URLS = {
 }
 
 export const API_ROUTES = {
-  LOGIN: ''
+  OWNER_LOGIN: '/owner/login',
+  OWNER_SIGNUP: '/owner/signup',
+  VALIDATE_OTP: '/owner/verifyOtp',
+  RESEND_OTP: '/owner/resendOtp'
 }

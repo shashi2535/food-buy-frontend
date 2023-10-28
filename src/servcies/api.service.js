@@ -4,7 +4,7 @@ import { authService } from './auth.service';
 import { storageService } from './storage.service';
 
 export const agent = axios.create({
-    baseURL: process.env.SERVER_BASE_URL ?? 'http://localhost:4000',
+    baseURL: process.env.REACT_APP_BACKEND_URL ?? 'http://localhost:4000',
     withCredentials: false,
 });
 

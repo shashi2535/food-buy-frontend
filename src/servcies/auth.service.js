@@ -33,11 +33,17 @@ export const setAuthToken = (token) => {
   storageService.setToLocalStorage(STORAGE_KEYS.AUTH_TOKEN, token);
 };
 
+export const getAuthToken = () => {
+  return storageService.getFromLocalStorage(STORAGE_KEYS.AUTH_TOKEN);
+}
+
 export const authService = {
   isAuthenticated,
   getUserDetails,
   logout,
   login,
   loginAdmin,
-  setUserDetails
+  setUserDetails,
+  setAuthToken,
+  getAuthToken
 };

@@ -6,7 +6,7 @@ import { OUR_PRODUCTS } from "../../constant";
 import './style.css';
 
 const ButtonGroup = ({ next, previous, goToSlide, ...rest }) => {
-    const { carouselState } = rest;
+    // const { carouselState } = rest;
     return (
         <div className="carousel-button-group">
             <button type="button" className="carousel-btn shadow carousel-btn-prev " onClick={() => previous()} >
@@ -51,7 +51,7 @@ export function ProductCarousal() {
                 <div className="card-body">
                     <h5 className="fs-4">{data.heading}</h5>
                     <p className=" text-secondary fs-normal">{data.subHeading}</p>
-                    <a href="#" className="card-link text-decoration-none">Learn More <MdExpandLess style={{ transform: 'rotate(90deg)' }} /></a>
+                    <span href="#" className="card-link text-decoration-none">Learn More <MdExpandLess style={{ transform: 'rotate(90deg)' }} /></span>
                 </div>
             </div>)}
 

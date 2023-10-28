@@ -1,12 +1,12 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import { Button, Modal } from "react-bootstrap";
 import { MODAL } from "../../constant";
 import { getCurrentModal, ModalContext } from "../../utils";
 import "./style.css";
 
 export const AuthenticationModals = ({ modal = MODAL.SIGN_UP }) => {
-  const [show, setShow] = useState(false);
-  const { currentModal, setCurrentModal } = useContext(ModalContext);
+  const { currentModal, setCurrentModal, show, setShow } =
+    useContext(ModalContext);
 
   const handleClose = () => {
     setShow(false);
