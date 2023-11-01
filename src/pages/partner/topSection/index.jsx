@@ -1,7 +1,14 @@
 import React from "react";
 import './style.css';
-import { APP_NAME } from "../../../constant";
+import { APP_NAME, PAGE_URLS } from "../../../constant";
+import {useNavigate} from "react-router-dom"
+
+
 export const TopSection = () => {
+  const nevigate =  useNavigate()
+  const handleClick = (e)=>{
+  nevigate(PAGE_URLS.ADD_RESTURENT)
+  }
   return (
     <div
       style={{ width: "inherit" }}
@@ -17,7 +24,7 @@ export const TopSection = () => {
           select cities.
         </div>
         <div className="row" style={{ width: "660px", marginLeft: 0 }}>
-          <button className="btn btn-primary col">
+          <button className="btn btn-primary col" onClick={(e)=>handleClick(e)}>
             Register Your restaurant
           </button>
           <button className="btn btn-light col-md-6 ms-md-3">

@@ -1,0 +1,11 @@
+
+
+.border-red:hover {
+    border: 1px solid rgb(153, 10, 0) !important;
+  }
+  
+  .border-red:focus {
+    border-color: rgb(153, 10, 0) !important;
+    outline-color: rgb(153, 5, 0) !important;
+  }
+  

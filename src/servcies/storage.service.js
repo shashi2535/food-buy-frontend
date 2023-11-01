@@ -1,7 +1,7 @@
 const getFromLocalStorage = (key) => {
     try {
       const item = window.localStorage.getItem(key);
-      return item ? JSON.parse(item) : null;
+      return item ? item : null;
     } catch (error) {
       console.log(`Error: Value not get in key:${key}`);
       return null;

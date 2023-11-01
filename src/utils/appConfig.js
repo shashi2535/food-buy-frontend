@@ -1,5 +1,5 @@
 const isAuthenticated = ()=>{
-  return localStorage.getItem("token") ? true :false
+  return localStorage.getItem("auth_token") ? true :false
 }
 
 export const getError = (error) => {

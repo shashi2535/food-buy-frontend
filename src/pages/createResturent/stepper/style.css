@@ -1,0 +1,11 @@
+.stepper{
+    /* background-color: aqua; */
+    box-shadow: -8px 17px 21px 16px rgba(0,0,0,0.1);
+}
+.stepper   .lead {
+      font-size: 1.1rem;
+    }
+  
+.border-left{
+    border-left: 2px solid #356EFD;
+  }

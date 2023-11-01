@@ -1,11 +1,9 @@
 import { Button } from "react-bootstrap";
 
-export const CustomButton = ({ color, value, type }) => {
+export const CustomButton = ({ color, value, type,icons }) => {
   return (
-    <div className="mb-3" style={{display:"flex", justifyContent:"center", alignItems:"center"}}>
-      <Button variant={color} type={type} style={{width:"60%"}}>
-        {value}
+  <Button variant={color} type={type}>
+       {icons} {value}
       </Button>
-    </div>
   );
 };

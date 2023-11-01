@@ -8,7 +8,7 @@ import { ModalContext } from "../../../utils";
 import { FormButton } from "../../button";
 import "./style.css";
 
-export const RestaurantNavBar = () => {
+export const RestaurantNavBar = ({className}) => {
   const [currentModal, setCurrentModal] = useState("");
   const [show, setShow] = useState(false);
   const [token, setToken] = useState(authService.getAuthToken());
@@ -22,7 +22,7 @@ export const RestaurantNavBar = () => {
     <ModalContext.Provider
       value={{ currentModal, setCurrentModal, show, setShow }}
     >
-      <Navbar expand="lg" className="partner-navbar navbar-dark">
+      <Navbar expand="lg" className= {className ? className : "partner-navbar navbar-dark"}>
         <Navbar.Brand href="#home">
           <div>
             <span className="logo-heading">{APP_NAME}</span>

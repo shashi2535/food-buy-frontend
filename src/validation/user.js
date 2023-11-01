@@ -15,3 +15,24 @@ export const signUpSchema = Yup.object().shape({
   email: Yup.string(getRequired('email')).email(getRequired('email')).required('Please enter a valid email'),
   isTermAccepted: Yup.boolean().oneOf([true]).required()
 });
+
+export const step1Schema = Yup.object().shape({
+  name: Yup.string()
+  .required('Enter valid res name'),
+  address:  Yup.string()
+  .required('Enter valid res address'),
+  latitude:Yup.string()
+  .required('Required*'),
+  longitude:Yup.string()
+  .required('Required*'),
+  phone: Yup.string()
+  .required('Required*'),
+  country: Yup.string()
+  .required('Required*'),
+  pinCode: Yup.string()
+  .required('Required*'),
+  state: Yup.string()
+  .required('Required*'),
+district: Yup.string()
+.required('Required*')
+});
