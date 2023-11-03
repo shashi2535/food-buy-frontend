@@ -1,3 +1,4 @@
+import { steps } from "../../../constant";
 import { useState } from "react";
 import { ResturentFooter } from "../Resturent-Footer";
 import { FormStep1 } from "./step1";
@@ -5,23 +6,6 @@ import { FormStep2 } from "./step2";
 import { FormStep3 } from "./step3";
 import "./style.css";
 // 
-const steps = [
-  {
-    title: "Restaurant Information",
-    description: "Restaurant name, address, contact no., owner details",
-    component: "hello1",
-  },
-  {
-    title: "Restaurant Type & Timings",
-    description: "Establishment & cuisine type, opening hours",
-    component: "hello2",
-  },
-  {
-    title: "Upload Images",
-    description: "Menu, restaurant, food images",
-    component: "hello3",
-  },
-];
 
 function StepContent(stepIndex) {
   switch (stepIndex) {
