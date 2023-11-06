@@ -159,7 +159,7 @@ const FormStep2 = ({ children }) => {
                               idx={idx}
                               handleChange={handleChange}
                               disable={
-                                values.outletType.length === 2 ? true : false
+                                values.cusion_type?.length === 2 ? true : false
                               }
                             />
                           </div>
@@ -256,9 +256,7 @@ const FormStep2 = ({ children }) => {
                               name="days"
                               idx={idx}
                               handleChange={handleChange}
-                              disable={
-                                values.outletType.length === 2 ? true : false
-                              }
+                              disable={false}
                             />
                           </div>
                         </>
