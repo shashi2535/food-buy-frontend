@@ -8,7 +8,12 @@ import {
   timeSlot,
   typeCusion,
 } from "../../../../constant";
+import { useState } from "react";
 const FormStep2 = ({ children }) => {
+  const firstEle = resturentType.slice(0,7)
+  const firstEleOfTypeCusion = typeCusion.slice(0,7)
+  const [resturent_type_state, setResturent_type_state ] = useState(firstEle)
+  const [cusion_type_state, setcusion_type_state ] = useState(firstEleOfTypeCusion)
   const {
     handleSubmit,
     values,
@@ -81,7 +86,7 @@ const FormStep2 = ({ children }) => {
                     <div className="mt-3">
                       <h6>Select options which best describe your outlet</h6>
                       <div className="row mt-2">
-                        {resturentType.map((ele, idx) => {
+                        {resturent_type_state.map((ele, idx) => {
                           return (
                             <>
                               <div className="col-md-4 mt-2" key={idx}>
@@ -102,6 +107,7 @@ const FormStep2 = ({ children }) => {
                             </>
                           );
                         })}
+                        {resturent_type_state?.length === 7 && <a href="#" onClick={()=>setResturent_type_state([...resturent_type_state, ...resturentType.slice(7,resturentType.length)])}> show more</a> }
                       </div>
                     </div>
                   )}
@@ -142,7 +148,7 @@ const FormStep2 = ({ children }) => {
               >
                 <div className="accordion-body d-flex flex-column">
                   <div className="row mt-2">
-                    {typeCusion.map((ele, idx) => {
+                    {cusion_type_state.map((ele, idx) => {
                       return (
                         <>
                           <div className="col-md-4 mt-2" key={idx}>
@@ -160,13 +166,13 @@ const FormStep2 = ({ children }) => {
                         </>
                       );
                     })}
+                     {cusion_type_state?.length === 7 && <a href="#" onClick={()=>setcusion_type_state([...cusion_type_state, ...typeCusion.slice(7,typeCusion.length)])}> show more</a> }
                   </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        {/* accordian for operational hour for restaurant */}
         <div className="row mt-5">
           <div className="accordion" id="accordionPanelsStayOpenExample">
             <div className="accordion-item">
@@ -201,7 +207,7 @@ const FormStep2 = ({ children }) => {
                         <div className="col">
                           <div className="d-flex flex-column">
                             <label htmlFor="opens_at">opens at</label>
-                            <select name="opens_at">
+                            <select name="opens_at" value={values.opens_at} onChange={handleChange}>
                               {timeSlot.map((element, idx) => {
                                 return (
                                   <>
@@ -218,11 +224,11 @@ const FormStep2 = ({ children }) => {
                         <div className="col">
                           <div className="d-flex flex-column">
                             <label htmlFor="close_at">close at</label>
-                            <select name="close_at">
+                            <select name="close_at" value={values.close_at} onChange={handleChange}>
                               {timeSlot.map((element, idx) => {
                                 return (
                                   <>
-                                    <option value={element} label={element} onChange={handleChange}>
+                                    <option value={element} label={element}>
                                       {element}
                                     </option>
                                   </>
@@ -268,9 +274,6 @@ const FormStep2 = ({ children }) => {
           </div>
         </div>
         {/* {children} */}
-    
-   
-
         <button type="submit"> submit</button>
       </form>
     </>

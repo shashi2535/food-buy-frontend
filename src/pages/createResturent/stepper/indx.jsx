@@ -35,7 +35,6 @@ const MultiStepForm = () => {
               style={{ width: "89%" }}
             >
               <div style={{ height: "5rem" }}>
-                {" "}
                 <h4>1. Create your restaurant page</h4>
               </div>
               {steps.map((element, index) => {
@@ -53,6 +52,11 @@ const MultiStepForm = () => {
                               ? " bg-primary"
                               : "bg-secondary"
                           }`}
+                          onClick={()=>{ 
+                            if(index < activeStep){
+                              setActiveStep(index)
+                            }
+                           }}
                         >
                           {index + 1}
                         </div>

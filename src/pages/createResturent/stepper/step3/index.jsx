@@ -1,11 +1,10 @@
 import { Formik, Form, Field, useFormik } from 'formik';
-import { useDropzone } from 'react-dropzone';
+import Dropzone, { useDropzone } from 'react-dropzone';
 
 const FormStep3 =({ onNext })=> {
   const {
     handleSubmit,
     values,
-    handleChange,
     setFieldValue
   } = useFormik({
     initialValues: {
@@ -17,16 +16,11 @@ const FormStep3 =({ onNext })=> {
       console.log(">>>values", values);
     },
   });
-  const onDrop = (acceptedFiles,sectionKey) => {
+  const onDrop = (acceptedFiles,fieldName) => {
     console.log("accepted files", acceptedFiles)
-    console.log("section key", sectionKey)
-    setFieldValue('menu_images', values.menu_images.concat(acceptedFiles));
+    console.log("section key", fieldName)
+    setFieldValue(fieldName, values[fieldName].concat(acceptedFiles));
   };
-  const { getRootProps, getInputProps } = useDropzone({
-    onDrop,
-    accept: 'image/*', // Specify the accepted file types (e.g., images)
-    multiple: true,     // Allow multiple file uploads
-  });
   return (
     <>
       <div className="row">
@@ -63,10 +57,16 @@ const FormStep3 =({ onNext })=> {
                 aria-labelledby="panelsStayOpen-headingOne"
               >
                 <div className="accordion-body d-flex flex-column">
-                <div className='row' {...getRootProps({ className: 'dropzone' })}>
-           <input {...getInputProps()} />
-          <i class="bi bi-plus-lg"></i>
-      </div>
+                  <div className='row'>
+                <Dropzone onDrop={(acceptedFiles) => onDrop(acceptedFiles, 'menu_images')}>
+          {({ getRootProps, getInputProps }) => (
+            <div {...getRootProps()} className="dropzone">
+              <input {...getInputProps()} />
+              <i class="bi bi-plus-lg"></i>
+            </div>
+          )}
+        </Dropzone> 
+                  </div>
       <div className='row'>
         {values.menu_images.map((file, index) => (
           <div  key={index}>
@@ -79,7 +79,7 @@ const FormStep3 =({ onNext })=> {
             </div>
           </div>
         </div>
-        {/* accordian for Contact number at restaurant */}
+        {/* accordian for resturent images */}
         <div className="row mt-5">
           <div className="accordion" id="accordionPanelsStayOpenExample">
             <div className="accordion-item">
@@ -110,10 +110,16 @@ const FormStep3 =({ onNext })=> {
                 aria-labelledby="panelsStayOpen-headingTwo"
               >
                 <div className="accordion-body d-flex flex-column">
-                <div className='row' {...getRootProps({ className: 'dropzone' })}>
-           <input {...getInputProps()} />
-          <i class="bi bi-plus-lg"></i>
-      </div>
+                <div className='row'>
+                <Dropzone onDrop={(acceptedFiles) => onDrop(acceptedFiles, 'resturent_image')}>
+          {({ getRootProps, getInputProps }) => (
+            <div {...getRootProps()} className="dropzone">
+              <input {...getInputProps()} />
+              <i class="bi bi-plus-lg"></i>
+            </div>
+          )}
+        </Dropzone> 
+                  </div>
       <div className='row'>
         {values.resturent_image.map((file, index) => (
           <div  key={index}>
@@ -155,10 +161,16 @@ const FormStep3 =({ onNext })=> {
                 aria-labelledby="panelsStayOpen-headingThree"
               >
                 <div className="accordion-body d-flex flex-column">
-                <div className='row' {...getRootProps({ className: 'dropzone' })}>
-           <input {...getInputProps()} />
-          <i class="bi bi-plus-lg"></i>
-      </div>
+                <div className='row'>
+                <Dropzone onDrop={(acceptedFiles) => onDrop(acceptedFiles, 'food_images')}>
+          {({ getRootProps, getInputProps }) => (
+            <div {...getRootProps()} className="dropzone">
+              <input {...getInputProps()} />
+              <i class="bi bi-plus-lg"></i>
+            </div>
+          )}
+        </Dropzone> 
+                  </div>
       <div className='row'>
         {values.food_images.map((file, index) => (
           <div  key={index}>
