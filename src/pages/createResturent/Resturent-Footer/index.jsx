@@ -2,9 +2,12 @@ import React, { useState } from "react";
 import { GoTriangleLeft, GoTriangleRight } from "react-icons/go";
 import { Button } from "react-bootstrap";
 import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { toggleAction } from "../../../redux/toggleSlice";
 
 const ResturentFooter = ({ setActiveStep, activeStep }) => {
   const [disabled, setDisabled] = useState(false);
+  const dispatch = useDispatch();
   useEffect(() => {
     {
       activeStep == 0 ? setDisabled(true) : setDisabled(false);
@@ -21,7 +24,6 @@ const ResturentFooter = ({ setActiveStep, activeStep }) => {
           style={{ width: "24%", height: "3.2rem" }}
           disabled={disabled}
           onClick={() => setActiveStep(activeStep - 1)}
-          type="submit"
         >
           {" "}
           <GoTriangleLeft />
@@ -32,8 +34,7 @@ const ResturentFooter = ({ setActiveStep, activeStep }) => {
         <Button
           variant="primary"
           style={{ width: "24%", height: "3.2rem" }}
-          onClick={() => setActiveStep(activeStep + 1)}
-          type="submit"
+          onClick={() => dispatch(toggleAction())}
         >
           Next
           <GoTriangleRight />

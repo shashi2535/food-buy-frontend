@@ -1,10 +1,21 @@
+import { useEffect, useRef } from "react";
+import { useSelector } from "react-redux";
 import { ShowErrorMessage } from "../../../../component";
 import { step1Schema } from "../../../../validation/user";
 import "./style.css";
 const { Formik, Field, Form } = require("formik");
 
-const FormStep1 = ({ children }) => {
-  console.log("dfsdafsdf");
+const FormStep1 = ({ activeStep, setActiveStep }) => {
+  console.log("FormStep1", activeStep);
+  const toggle = useSelector((state) => state.toggle.toggle);
+  const submitButtonRef = useRef(null);
+  useEffect(() => {
+    if(activeStep === 0) {
+      if (submitButtonRef.current) {
+        submitButtonRef.current.click();
+      }
+    }
+  }, [toggle, activeStep]);
   return (
     <>
       <div className="row">
@@ -24,6 +35,7 @@ const FormStep1 = ({ children }) => {
         }}
         onSubmit={(values) => {
           console.log(">>hgfhgfhfhfhfh>>>", values);
+          setActiveStep(activeStep + 1)
           console.log(values);
         }}
         validationSchema={step1Schema}
@@ -262,7 +274,13 @@ const FormStep1 = ({ children }) => {
                   </div>
                 </div>
               </div>
-              {/* {children} */}
+              <button
+                type="submit"
+                style={{ display: "none" }}
+                ref={submitButtonRef}
+              >
+                submit{" "}
+              </button>
             </Form>
           )
         )}

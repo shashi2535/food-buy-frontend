@@ -9,7 +9,8 @@ import {
   typeCusion,
 } from "../../../../constant";
 import { useState } from "react";
-const FormStep2 = ({ children }) => {
+const FormStep2 = ({ children, activeStep }) => {
+  console.log("FormStep2", activeStep);
   const firstEle = resturentType.slice(0,7)
   const firstEleOfTypeCusion = typeCusion.slice(0,7)
   const [resturent_type_state, setResturent_type_state ] = useState(firstEle)
