@@ -23,7 +23,7 @@ function StepContent(activeStep,setActiveStep) {
 }
 
 const MultiStepForm = () => {
-  const [activeStep, setActiveStep] = useState(0);
+  const [activeStep, setActiveStep] = useState(1);
   const CurrentForm = StepContent(activeStep,setActiveStep);
   return (
     <>

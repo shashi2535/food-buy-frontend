@@ -11,7 +11,6 @@ import {
 import { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 const FormStep2 = ({ activeStep }) => {
-  console.log("FormStep2", activeStep);
   const firstEle = resturentType.slice(0,7)
   const firstEleOfTypeCusion = typeCusion.slice(0,7)
   const [resturent_type_state, setResturent_type_state ] = useState(firstEle)
@@ -23,6 +22,8 @@ const FormStep2 = ({ activeStep }) => {
     handleSubmit,
     values,
     handleChange,
+    setFieldValue,
+    getFieldProps
   } = useFormik({
     initialValues: {
       restaurantType: "",
@@ -30,9 +31,11 @@ const FormStep2 = ({ activeStep }) => {
       cusion_type: [],
       days:[],
       opens_at:"",
-      close_at:""
+      close_at:"",
+      times:[{opens_at:"",close_at:""}]
     },
     onSubmit: (values) => {
+      // values.time.push({opens_at:values.opens_at,close_at:values.close_at})
       console.log(">>>values in form 2", values);
       // setActiveStep(activeStep+1)
     },
@@ -49,7 +52,12 @@ const FormStep2 = ({ activeStep }) => {
       }
     }
   }, [toggle]);
-  return (
+  const handleAddTimeSlot = ()=>{
+if(values.times.length <=2){
+  setFieldValue("times", [...values.times,{opens_at:"",close_at:""}])
+}
+  }
+return (
     <>
       <div className="row">
         <h2 className="mt-5 ml-2"> Restaurant Type & Timings</h2>
@@ -106,23 +114,10 @@ const FormStep2 = ({ activeStep }) => {
                       <div className="row mt-2">
                         {resturent_type_state.map((ele, idx) => {
                           return (
-                            <>
                               <div className="col-md-4 mt-2" key={idx}>
-                                {" "}
-                                <CheckBoxCustom
-                                  value={ele.value}
-                                  text={ele.text}
-                                  name="outletType"
-                                  idx={idx}
-                                  handleChange={handleChange}
-                                  disable={
-                                    values.outletType.length === 2
-                                      ? true
-                                      : false
-                                  }
-                                />
+                                  <input class="form-check-input custom" type="checkbox" id={idx} value={ele.value} name="outletType"  onChange={handleChange} disabled={values.outletType.length >=2 ? values.outletType.includes(ele.value) ? false :true : false}/>
+                                 <label class="form-check-label" htmlFor={idx}>{ele.text}</label>
                               </div>
-                            </>
                           );
                         })}
                         {resturent_type_state?.length === 7 && <a href="#" onClick={()=>setResturent_type_state([...resturent_type_state, ...resturentType.slice(7,resturentType.length)])}> show more</a> }
@@ -168,20 +163,10 @@ const FormStep2 = ({ activeStep }) => {
                   <div className="row mt-2">
                     {cusion_type_state.map((ele, idx) => {
                       return (
-                        <>
                           <div className="col-md-4 mt-2" key={idx}>
-                            <CheckBoxCustom
-                              value={ele.value}
-                              text={ele.text}
-                              name="cusion_type"
-                              idx={idx}
-                              handleChange={handleChange}
-                              disable={
-                                values.cusion_type?.length === 2 ? true : false
-                              }
-                            />
+   <input class="form-check-input custom" type="checkbox" id={idx} value={ele.value} name="cusion_type"  onChange={handleChange} disabled={values.cusion_type.length >=2 ? values.cusion_type.includes(ele.value) ? false :true : false}/>
+<label class="form-check-label" htmlFor={idx}>{ele.text}</label>
                           </div>
-                        </>
                       );
                     })}
                      {cusion_type_state?.length === 7 && <a href="#" onClick={()=>setcusion_type_state([...cusion_type_state, ...typeCusion.slice(7,typeCusion.length)])}> show more</a> }
@@ -221,11 +206,15 @@ const FormStep2 = ({ activeStep }) => {
                 <div className="accordion-body d-flex flex-column">
                   <div className="row mt-3">
                     <div className="col">
-                      <div className="row">
-                        <div className="col">
+                      {
+                        values.times.map((ele,idx)=>{
+                          return(
+                            <>
+                          <div className="row">
+                          <div className="col">
                           <div className="d-flex flex-column">
                             <label htmlFor="opens_at">opens at</label>
-                            <select name="opens_at" value={values.opens_at} onChange={handleChange}>
+                            <select {...getFieldProps(`times[${idx}].opens_at`)}>
                               {timeSlot.map((element, idx) => {
                                 return (
                                   <>
@@ -242,7 +231,7 @@ const FormStep2 = ({ activeStep }) => {
                         <div className="col">
                           <div className="d-flex flex-column">
                             <label htmlFor="close_at">close at</label>
-                            <select name="close_at" value={values.close_at} onChange={handleChange}>
+                            <select {...getFieldProps(`times[${idx}].close_at`)}>
                               {timeSlot.map((element, idx) => {
                                 return (
                                   <>
@@ -254,8 +243,14 @@ const FormStep2 = ({ activeStep }) => {
                               })}
                             </select>
                           </div>
+                       
                         </div>
                       </div>
+                          </>
+                           )
+                        })
+                      }
+              {values.times.length < 3 ?  <button  onClick={()=>handleAddTimeSlot()}> +Add time slots</button> :""} 
                     </div>
                     <div className="col"></div>
                   </div>

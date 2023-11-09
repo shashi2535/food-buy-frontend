@@ -1,14 +1,21 @@
-import { Field } from "formik";
 import './style.css';
 
-export const Input = ({name, type}) => {
+export const CustomInput = ({name, type, placelholder,handleChange,values, style,errors }) => {
+  console.log("style",style)
   return (
     <>
-     <div style={{height:"10vh", width:"100%", display:"flex", justifyContent:"center", alignItems:"center", flexDirection:"column"}}>
-          <label htmlFor={name}>{name}</label>
-          <Field style={{width:"60%", outline:"none" }} type={type} id={name} name={name}  />
-        </div>
-        <br/>
+     <input
+                      type={type}
+                      name={name}
+                      placeholder={placelholder}
+                      className={`mt-2 rounded w-100 form-input-field p-2 ${
+                        errors ? "border-red" : "border"
+                      }`}
+                      style={{style}}
+                      onChange={handleChange}
+                      value={values}
+                    />
+      
     </>
   );
 };

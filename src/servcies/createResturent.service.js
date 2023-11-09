@@ -6,3 +6,6 @@ export const step1Create = (values)=>{
 export const stepGetDataById = (id)=>{
     return apiService.get(`/get-basic-details/${id}`);
 }
+export const step1UpdateDataById = (id,values)=>{
+    return apiService.post(`/update-basic-details/${id}`, values);
+}
