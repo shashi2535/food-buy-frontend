@@ -8,7 +8,8 @@ const publicRoute = [
 
 const privateRoute = [
     { path: PAGE_URLS.PARTNERS_LANDING_PAGE, Component: PartnerLanding },
-    {path:PAGE_URLS.ADD_RESTURENT, Component:AddResturent}
+    {path:PAGE_URLS.ADD_RESTURENT, Component:AddResturent},
+    {path:PAGE_URLS.ADD_RESTURENT_WITH_ID, Component:AddResturent}
   
 ];
 

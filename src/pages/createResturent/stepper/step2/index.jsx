@@ -8,13 +8,17 @@ import {
   timeSlot,
   typeCusion,
 } from "../../../../constant";
-import { useState } from "react";
-const FormStep2 = ({ children, activeStep }) => {
+import { useEffect, useRef, useState } from "react";
+import { useSelector } from "react-redux";
+const FormStep2 = ({ activeStep }) => {
   console.log("FormStep2", activeStep);
   const firstEle = resturentType.slice(0,7)
   const firstEleOfTypeCusion = typeCusion.slice(0,7)
   const [resturent_type_state, setResturent_type_state ] = useState(firstEle)
   const [cusion_type_state, setcusion_type_state ] = useState(firstEleOfTypeCusion)
+  const toggle = useSelector((state) => state.toggle.toggle);
+  const submitButtonRef = useRef(null);
+  const firstUpdate = useRef(true);
   const {
     handleSubmit,
     values,
@@ -29,9 +33,22 @@ const FormStep2 = ({ children, activeStep }) => {
       close_at:""
     },
     onSubmit: (values) => {
-      console.log(">>>values", values);
+      console.log(">>>values in form 2", values);
+      // setActiveStep(activeStep+1)
     },
   });
+  useEffect(() => {
+    console.log("activestep>>>>inform2",activeStep)
+    if (firstUpdate.current) {
+      firstUpdate.current = false;
+      return;
+    }
+    if(activeStep === 1) {
+      if (submitButtonRef.current) {
+        submitButtonRef.current.click();
+      }
+    }
+  }, [toggle]);
   return (
     <>
       <div className="row">
@@ -272,8 +289,7 @@ const FormStep2 = ({ children, activeStep }) => {
             </div>
           </div>
         </div>
-        {/* {children} */}
-        <button type="submit"> submit</button>
+        <button type="submit" style={{display:"none"}} ref={submitButtonRef}> submit</button>
       </form>
     </>
   );

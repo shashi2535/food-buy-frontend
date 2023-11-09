@@ -2,20 +2,37 @@ import { useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 import { ShowErrorMessage } from "../../../../component";
 import { step1Schema } from "../../../../validation/user";
+import { step1Create, stepGetDataById } from "../../../../servcies";
 import "./style.css";
+import { toast } from "react-toastify";
+import {useNavigate,useParams} from "react-router-dom"
+import { PAGE_URLS } from "../../../../constant";
 const { Formik, Field, Form } = require("formik");
-
-const FormStep1 = ({ activeStep, setActiveStep }) => {
-  console.log("FormStep1", activeStep);
+const FormStep1 = ({ activeStep,setActiveStep }) => {
+  let { id } = useParams();
   const toggle = useSelector((state) => state.toggle.toggle);
   const submitButtonRef = useRef(null);
-  useEffect(() => {
-    if(activeStep === 0) {
+  const nevigate = useNavigate()
+  const firstUpdate = useRef(true);
+   useEffect(() => {
+     if(id){
+    console.log("hi>> in form1 ")
+    const data = stepGetDataById(id)
+      data.then((result)=>{
+    console.log("result",result)
+    
+      })
+     }
+    if (firstUpdate.current) {
+      firstUpdate.current = false;
+      return;
+    }
+    if (activeStep === 0) {
       if (submitButtonRef.current) {
         submitButtonRef.current.click();
       }
     }
-  }, [toggle, activeStep]);
+  }, [toggle,activeStep]);
   return (
     <>
       <div className="row">
@@ -32,16 +49,45 @@ const FormStep1 = ({ activeStep, setActiveStep }) => {
           pinCode: "",
           state: "",
           district: "",
+          whatsAppNotifications: "",
         }}
         onSubmit={(values) => {
-          console.log(">>hgfhgfhfhfhfh>>>", values);
-          setActiveStep(activeStep + 1)
-          console.log(values);
+          const payload = {
+            name: values.name,
+            whatsAppNotifications: values.whatsAppNotifications,
+            phoneNumber: values.phone,
+            phoneNumberCountryCode: "+91",
+            address: {
+              address: values.address,
+              latitude: Number(values.latitude),
+              longitude: Number(values.longitude),
+              country: values.country,
+              pinCode: values.pinCode,
+              district: values.district,
+              state: values.state,
+            },
+          }
+          const data = step1Create(payload);
+          data
+            .then((result) => {
+              console.log("result",result)
+              if(result.status === false){
+                toast.error(result.message,{
+                position: toast.POSITION.TOP_RIGHT
+               })
+              }
+              if(result.status === true){
+                nevigate(`${PAGE_URLS.ADD_RESTURENT}/${result.data.id}`)
+                setActiveStep(activeStep+1)
+              }
+            })
+            .catch((err) => {
+              console.log("err", err);
+            });
         }}
         validationSchema={step1Schema}
       >
         {({ errors, touched }) => (
-          console.log("valie", touched, "errors", errors),
           (
             <Form>
               {/* accordian for Restaurant details at restaurant */}
@@ -238,10 +284,13 @@ const FormStep1 = ({ activeStep, setActiveStep }) => {
                       >
                         <div className="d-flex flex-column">
                           <div className="row">
-                            <h5>Restaurant details</h5>
+                            <h5>Restaurant owner details</h5>
                           </div>
                           <div className="row">
-                            <h6>Name, address and location</h6>
+                            <h6>
+                              These will be used to share revenue related
+                              communications
+                            </h6>
                           </div>
                         </div>
                       </button>
@@ -269,6 +318,25 @@ const FormStep1 = ({ activeStep, setActiveStep }) => {
                             <ShowErrorMessage errors={errors.phone} />
                           ) : null}
                         </div>
+                        {/* working */}
+                        <div className="row mt-2">
+                          <label htmlFor="whatsAppNotifications">
+                            <Field
+                              type="checkbox"
+                              name="whatsAppNotifications"
+                              id="whatsAppNotifications"
+                            />
+                            Yes, I would like to receive important updates and
+                            notifications from Zomato on my WhatsApp
+                          </label>
+
+                          {errors.whatsAppNotifications &&
+                          touched.whatsAppNotifications ? (
+                            <ShowErrorMessage
+                              errors={errors.whatsAppNotifications}
+                            />
+                          ) : null}
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -279,7 +347,7 @@ const FormStep1 = ({ activeStep, setActiveStep }) => {
                 style={{ display: "none" }}
                 ref={submitButtonRef}
               >
-                submit{" "}
+                submit
               </button>
             </Form>
           )

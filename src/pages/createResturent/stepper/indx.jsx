@@ -88,8 +88,6 @@ const MultiStepForm = () => {
           </div>
           <div className="col col-9 h-75">
             {CurrentForm}
-            {/* <ResturentFooter />
-            </CurrentForm> */}
           </div>
         </div>
       </div>

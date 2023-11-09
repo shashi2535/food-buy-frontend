@@ -57,7 +57,6 @@ agent.interceptors.response.use(
                 console.error(errorMessage);
                 break;
         }
-
         return Promise.reject(error?.response?.data || error);
     }
 );

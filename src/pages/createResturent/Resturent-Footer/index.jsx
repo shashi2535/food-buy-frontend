@@ -25,7 +25,6 @@ const ResturentFooter = ({ setActiveStep, activeStep }) => {
           disabled={disabled}
           onClick={() => setActiveStep(activeStep - 1)}
         >
-          {" "}
           <GoTriangleLeft />
           Go back
         </Button>

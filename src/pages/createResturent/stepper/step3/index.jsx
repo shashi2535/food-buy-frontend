@@ -1,7 +1,12 @@
 import { Formik, Form, Field, useFormik } from 'formik';
+import { useEffect, useRef } from 'react';
 import Dropzone, { useDropzone } from 'react-dropzone';
+import { useSelector } from 'react-redux';
 
-const FormStep3 =({ onNext })=> {
+const FormStep3 =({ activeStep })=> {
+  const toggle = useSelector((state) => state.toggle.toggle);
+  const submitButtonRef = useRef(null);
+  const firstUpdate = useRef(true);
   const {
     handleSubmit,
     values,
@@ -21,6 +26,18 @@ const FormStep3 =({ onNext })=> {
     console.log("section key", fieldName)
     setFieldValue(fieldName, values[fieldName].concat(acceptedFiles));
   };
+  useEffect(() => {
+    console.log("activestep>>>>",activeStep)
+    if (firstUpdate.current) {
+      firstUpdate.current = false;
+      return;
+    }
+    if(activeStep === 2) {
+      if (submitButtonRef.current) {
+        submitButtonRef.current.click();
+      }
+    }
+  }, [toggle, activeStep]);
   return (
     <>
       <div className="row">
@@ -184,7 +201,7 @@ const FormStep3 =({ onNext })=> {
           </div>
         </div>
         {/* {children} */}
-        <button type="submit"> submit</button>
+        <button type="submit" style={{display:"none"}} ref={submitButtonRef}> submit</button>
       </form>
     </>
   );
