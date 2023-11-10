@@ -3,6 +3,7 @@ import { FormikRadioGroup } from "../../../../component/radioGroup";
 import { CheckBoxCustom } from "../../../../component/checkBox";
 import {
   dayConstant,
+  PAGE_URLS,
   redioConstant,
   resturentType,
   timeSlot,
@@ -10,7 +11,12 @@ import {
 } from "../../../../constant";
 import { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
-const FormStep2 = ({ activeStep }) => {
+import { step2Schema } from "../../../../validation/user";
+import { ShowErrorMessage } from "../../../../component";
+import { getEntityType, saveTheDataOfStep2 } from "../../../../servcies";
+import {useParams,useNavigate} from "react-router-dom"
+import { toast } from "react-toastify";
+const FormStep2 = ({ activeStep, setActiveStep }) => {
   const firstEle = resturentType.slice(0,7)
   const firstEleOfTypeCusion = typeCusion.slice(0,7)
   const [resturent_type_state, setResturent_type_state ] = useState(firstEle)
@@ -18,12 +24,16 @@ const FormStep2 = ({ activeStep }) => {
   const toggle = useSelector((state) => state.toggle.toggle);
   const submitButtonRef = useRef(null);
   const firstUpdate = useRef(true);
+  const {id} = useParams()
+  const navigate = useNavigate()
   const {
     handleSubmit,
     values,
     handleChange,
     setFieldValue,
-    getFieldProps
+    getFieldProps,
+    errors,
+    touched
   } = useFormik({
     initialValues: {
       restaurantType: "",
@@ -34,14 +44,78 @@ const FormStep2 = ({ activeStep }) => {
       close_at:"",
       times:[{opens_at:"",close_at:""}]
     },
-    onSubmit: (values) => {
+    onSubmit: async(values) => {
       // values.time.push({opens_at:values.opens_at,close_at:values.close_at})
       console.log(">>>values in form 2", values);
-      // setActiveStep(activeStep+1)
+      const getData = await getEntityType({type:["cuisine","outlets","kitchen_type"]})
+      const data = getData.data
+      const payload = {
+        kitchenType:[],
+        outlets:[],
+        cuisines:[],
+        timings:[]
+      }
+      for(let element of data){
+        if(element.type === "cuisine"){
+          for(let item of values.cusion_type){
+            element.slugs.forEach((ele)=>{
+              if(ele.slug === item){
+                payload.cuisines.push(ele.id)
+                 }}
+                )
+              }
+          }
+          if(element.type === "outlets"){
+            for(let item of values.outletType){
+              element.slugs.forEach((ele)=>{
+                if(ele.slug === item){
+                  payload.outlets.push(ele.id)
+                   }}
+                  )
+                }
+            }
+            if(element.type === "kitchen_type"){
+               element.slugs.forEach((ele)=>{
+                 if(ele.slug === values.restaurantType){
+                  return  payload.kitchenType.push(ele.id)   
+               }
+           }
+                    ) 
+              }
+      }
+      for(let ele of values.days){
+         const obj ={
+          day:"",
+          shifts:[]
+         }
+       for(let item of values.times){
+          const timing ={openingTime:"",closingTime:""}
+          obj.day = ele
+          timing.openingTime = item.opens_at
+          timing.closingTime = item.close_at
+          obj.shifts.push(timing)
+          payload.timings.push(obj)
+        }
+       }
+    const step2Data = await saveTheDataOfStep2(id,payload)
+    if(step2Data.status === false){
+      if(step2Data.message ==="unauthorized"){
+        navigate(PAGE_URLS.PARTNERS_LANDING_PAGE)
+      } 
+      toast.error(step2Data.message, {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+    }
+    if(step2Data.status === true ){
+      navigate(`${PAGE_URLS.ADD_RESTURENT}/${id}`);
+      setActiveStep(activeStep + 1);
+    }
     },
+    validationSchema:step2Schema
   });
   useEffect(() => {
     console.log("activestep>>>>inform2",activeStep)
+    
     if (firstUpdate.current) {
       firstUpdate.current = false;
       return;
@@ -107,23 +181,29 @@ return (
                       </>
                     );
                   })}
-                  {(values.restaurantType === "dineInOnly" ||
-                    values.restaurantType === "BothDelivery") && (
+                  {(values.restaurantType === "dineout" ||
+                    values.restaurantType === "both") && (
                     <div className="mt-3">
                       <h6>Select options which best describe your outlet</h6>
                       <div className="row mt-2">
                         {resturent_type_state.map((ele, idx) => {
                           return (
                               <div className="col-md-4 mt-2" key={idx}>
-                                  <input class="form-check-input custom" type="checkbox" id={idx} value={ele.value} name="outletType"  onChange={handleChange} disabled={values.outletType.length >=2 ? values.outletType.includes(ele.value) ? false :true : false}/>
+                                  <input class="form-check-input custom" type="checkbox" id={idx} value={ele.text} name="outletType"  onChange={handleChange} disabled={values.outletType.length >=2 ? values.outletType.includes(ele.text) ? false :true : false}/>
                                  <label class="form-check-label" htmlFor={idx}>{ele.text}</label>
                               </div>
                           );
                         })}
                         {resturent_type_state?.length === 7 && <a href="#" onClick={()=>setResturent_type_state([...resturent_type_state, ...resturentType.slice(7,resturentType.length)])}> show more</a> }
+                        {(errors.outletType || touched.outletType) && (
+                      <ShowErrorMessage errors={errors.outletType} />
+                    )}
                       </div>
                     </div>
                   )}
+                     {(errors.restaurantType || touched.restaurantType) && (
+                      <ShowErrorMessage errors={errors.restaurantType} />
+                    )}
                 </div>
               </div>
             </div>
@@ -164,12 +244,15 @@ return (
                     {cusion_type_state.map((ele, idx) => {
                       return (
                           <div className="col-md-4 mt-2" key={idx}>
-   <input class="form-check-input custom" type="checkbox" id={idx} value={ele.value} name="cusion_type"  onChange={handleChange} disabled={values.cusion_type.length >=2 ? values.cusion_type.includes(ele.value) ? false :true : false}/>
+   <input class="form-check-input custom" type="checkbox" id={idx} value={ele.text} name="cusion_type"  onChange={handleChange} disabled={values.cusion_type.length >=2 ? values.cusion_type.includes(ele.text) ? false :true : false}/>
 <label class="form-check-label" htmlFor={idx}>{ele.text}</label>
                           </div>
                       );
                     })}
                      {cusion_type_state?.length === 7 && <a href="#" onClick={()=>setcusion_type_state([...cusion_type_state, ...typeCusion.slice(7,typeCusion.length)])}> show more</a> }
+                     {(errors.cusion_type || touched.cusion_type) && (
+                      <ShowErrorMessage errors={errors.cusion_type} />
+                    )}
                   </div>
                 </div>
               </div>
@@ -275,6 +358,9 @@ return (
                         </>
                       );
                     })}
+                         {(errors.days || touched.days) && (
+                      <ShowErrorMessage errors={errors.days} />
+                    )}
               </div>
             </div>
             <div className="col"></div>

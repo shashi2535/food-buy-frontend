@@ -37,3 +37,12 @@ export const step1Schema = Yup.object().shape({
   state: Yup.string().required("Required*"),
   district: Yup.string().required("Required*"),
 });
+
+export const step2Schema = Yup.object().shape({
+  days: Yup.array()
+    .min(2, "Min 2 Days Are Selected.")
+    .max(2, "Max 2 Days Are Selected"),
+  outletType: Yup.array().min(1, "please select 1 outlet type"),
+  cusion_type: Yup.array().min(1, "please select 1 cusion type"),
+  restaurantType: Yup.string().required("please select a resturent type"),
+});
